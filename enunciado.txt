@@ -1,1 +1,22 @@
-aca vamos a poner el enunciadodfafasda
+Vuelos
+Realizar un programa para administrar una empresa de vuelos. Se debe poder administrar
+
+(Altas, bajas, modificaciones) datos de 
+
+- aviones: marca, modelo, denominación interna (código 3 letras), capacidad de pasajeros
+
+- aeropuertos: código (4 letras), nombre real, ciudad, país
+
+- vuelos: codigo de vuelo (5 letras), aeropuerto origen, aeropuerto destino, fecha del vuelo, hora del vuelo, avion
+
+- pasajes: vuelo, dni del pasajero, nombre del pasajero, nro de asiento
+
+
+Se deben poder realizar las siguientes consultas:
+
+- vuelos que se originan en un aeropuerto dado, para un rango de fechas
+
+- pasajes vendidos para un vuelo dado
+
+- asientos libres en un vuelo dado
+
