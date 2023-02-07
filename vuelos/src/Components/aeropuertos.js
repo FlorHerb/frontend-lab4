@@ -1,8 +1,45 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getAeropuertos, deleteAeropuerto, addAeropuerto } from "../Services/aeropuetos-services";
+import { getCiudades } from '../Services/ciudades-services'
 
 function Aeropuertos() {
+  const [aeropuertos, setAeropuertos] = useState([]);
+  const [aeropuerto, setAeropuerto] = useState([]);
+
+  const [ciudades, setCiudades] = useState([]);
+
+  useEffect(() => {
+    obtenerAeropuertos();
+    obtenerCiudades();
+  }, []);
+
+  const obtenerAeropuertos = async () => {
+    setAeropuertos( await getAeropuertos());
+  }
+
+  const obtenerCiudades = async () => {
+    setCiudades( await getCiudades());
+  }
+
+  const borrar = async (codigo) => {
+    await deleteAeropuerto(codigo);
+    obtenerAeropuertos();
+    }
+
+    const handleChangeAeropuerto = ((e) => {
+      setAeropuerto(prev => { return { ...prev, [e.target.name]: e.target.value } });
+    });
+
+    const handleClickAeropuerto = ((e) => {
+      e.preventDefault();
+      addAeropuerto(aeropuerto);
+      obtenerAeropuertos();
+      });
+
+
   return (
     <div>
     <p class="text-center" style={{marginTop: '2%', fontWeight: '500'}}>Administracion de Aeropuertos</p>
@@ -18,13 +55,15 @@ function Aeropuertos() {
         </tr>
         </thead>
         <tbody>
-                  <tr>
-                    <th scope="col"><Link to={"" + 'QSCV'}>QSCV</Link></th>
-                    <td >Ministro Pistarini</td>
-                    <td >Buenos Aires</td>
-                    <td >Argentina</td>
-                    <td><button className="btn btn-primary" type="button" >Eliminar</button></td>
+        {aeropuertos.map((aeropuertos) =>
+                  <tr key={aeropuertos.id}>
+                    <th scope="col"><Link to={"" + aeropuertos.codigo}>{aeropuertos.codigo}</Link></th>
+                    <td >{aeropuertos.nombre}</td>
+                    <td >{aeropuertos.ciudad.nombre}</td>
+                    <td >{aeropuertos.ciudad.pais.nombre}</td>
+                    <td><button className="btn btn-primary" type="button" onClick={() => borrar(aeropuertos.codigo)}>Eliminar</button></td>
                     </tr>
+                    )}
          </tbody>
       </table>
 
@@ -42,25 +81,23 @@ function Aeropuertos() {
       <div class="modal-body">
       <div class="mb-3">
         <label for="codigoAeropuerto" class="form-label">Codigo Aeropuerto</label>
-        <input type="codigo" class="form-control" id="codigoAeropuerto" />
+        <input type="text" class="form-control" id="codigoAeropuerto" name="codigo" onChange={handleChangeAeropuerto} />
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 4 letras y ser UNICO.</div>
     </div>
     <div class="mb-3">
         <label for="nombreAeropuerto" class="form-label">Nombre Aeropuerto</label>
-        <input type="nombre" class="form-control" id="nombreAeropuerto"/>
+        <input type="text" class="form-control" id="nombreAeropuerto" name="nombre" onChange={handleChangeAeropuerto} />
     </div>
-    <div class="mb-3">
-        <label for="cuidad" class="form-label">Ciudad</label>
-        <input type="cuidad" class="form-control" id="cuidad" />
-    </div>
-    <div class="mb-3">
-        <label for="pais" class="form-label">Pais</label>
-        <input type="pais" class="form-control" id="pais" />
-    </div>
+    <select class="form-select"  name="id_ciudad" aria-label="Default select example" onChange={handleChangeAeropuerto} >
+            <option selected> Ciudad</option>
+            {ciudades.map((ciudades) =>
+          <option key={ciudades.id} value={ciudades.id} >{ciudades.nombre}</option>
+        )}
+          </select>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-        <button type="button" class="btn btn-primary">Cargar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={handleClickAeropuerto}>Cargar</button>
       </div>
     </div>
   </div>

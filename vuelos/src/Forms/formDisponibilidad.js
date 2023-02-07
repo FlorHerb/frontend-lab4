@@ -1,11 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import React, { useState , useEffect } from "react";
+import { useParams , useNavigate } from 'react-router-dom';
+import { getAsientosByID } from "../Services/asientos-services";
 
 function FormAviones() {
     const { codigoVuelo } = useParams();
     const navigate = useNavigate()
+    const [asientos, setAsientos] = useState([]);
 
+    useEffect(() => {
+      obtenerAsientos()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+
+    const obtenerAsientos = async () => {
+      setAsientos( await getAsientosByID(codigoVuelo));
+    }
   return (
     <div style={{textAlign:'-webkit-center'}}>
       <p class="text-center" style={{marginTop: '2%', fontWeight: '500'}}>Formulario de disponibilidad para el vuelo {codigoVuelo}</p>
@@ -15,13 +25,13 @@ function FormAviones() {
             <div class="container text-center">
             <div class="row">
                 <div class="col">
-                 Totales: 30
+                 Totales: {asientos.length}
                 </div>
                 <div class="col">
-                 Libres: 10
+                 Libres: {asientos.filter((asiento) => asiento.id_pasaje ===null).length}
                 </div>
                 <div class="col">
-                 Ocupados: 20
+                 Ocupados: {asientos.filter((asiento) => asiento.id_pasaje !== null).length}
                 </div>
             </div>
             </div>
@@ -36,10 +46,13 @@ function FormAviones() {
         </tr>
         </thead>
         <tbody>
-                  <tr>
-                    <td >1</td>
-                    <td >Disponible</td>
+        {asientos
+        .map((asientos) =>
+                  <tr key={asientos.id}>
+                    <td >{asientos.num_asiento}</td>
+                    <td >{asientos.id_pasaje === null ? 'Disponible' : 'Ocupado'}</td>
                     </tr>
+                  )}
          </tbody>
       </table>
       <button type="button" class="btn btn-primary" onClick={() => navigate("/vuelos")} style={{float:'left', marginLeft:'30%'}}>Volver</button>
