@@ -6,7 +6,7 @@ import { getAsientosByID } from "../Services/asientos-services";
 function FormAviones() {
     const { codigoVuelo } = useParams();
     const navigate = useNavigate()
-    const [asientos, setAsientos] = useState([]);
+    const [asientos, setAsientos] = useState(null);
 
     useEffect(() => {
       obtenerAsientos()
@@ -16,6 +16,14 @@ function FormAviones() {
     const obtenerAsientos = async () => {
       setAsientos( await getAsientosByID(codigoVuelo));
     }
+    if( asientos === null){
+      return (
+      <div class="d-flex justify-content-center" style={{marginTop:'5%'}}>
+      <div class="spinner-border" role="status">
+      </div>
+    </div>
+    );}
+
   return (
     <div style={{textAlign:'-webkit-center'}}>
       <p class="text-center" style={{marginTop: '2%', fontWeight: '500'}}>Formulario de disponibilidad para el vuelo {codigoVuelo}</p>
@@ -50,7 +58,7 @@ function FormAviones() {
         .map((asientos) =>
                   <tr key={asientos.id}>
                     <td >{asientos.num_asiento}</td>
-                    <td >{asientos.id_pasaje === null ? 'Disponible' : 'Ocupado'}</td>
+                    <td >{asientos.id_pasaje === null ? <b style={{color:'green'}}> Libre </b> :  <mark style={{color:'red'}}> Ocupado </mark>}</td>
                     </tr>
                   )}
          </tbody>

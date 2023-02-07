@@ -14,7 +14,7 @@ function FormVentaPasajes() {
     });
     const [pasajero, setPasajero] = useState([]);
     const [pasajeros, setPasajeros] = useState([]);
-    const [asientos, setAsientos] = useState([]);
+    const [asientos, setAsientos] = useState(null);
    
     const navigate = useNavigate()
 
@@ -47,6 +47,11 @@ function FormVentaPasajes() {
 
       const handleClickPasajero = ((e) => {
         e.preventDefault();
+        if(pasajeros.filter(elemento=> elemento.dni==pasajero.dni).length > 0){
+         
+          alert("¡Ya se encuentra registrada una persona con este dni!")
+          return;
+        }
         addPasajero(pasajero);
         obtenerPasajeros()
         });
@@ -54,8 +59,16 @@ function FormVentaPasajes() {
       const handleClickPasaje = ((e) => {
         e.preventDefault();
         addPasaje(pasaje);
+        alert("felicitaciones el pasaje del vuelo "+pasaje.cod_vuelo+' , asiento: '+pasaje.nro_asiento+' , pasajero: '+pasaje.id_pasajero+' fue cargado con exito. ')
         });
   
+        if( asientos === null){
+          return (
+          <div class="d-flex justify-content-center" style={{marginTop:'5%'}}>
+          <div class="spinner-border" role="status">
+          </div>
+        </div>
+        );}
 
   return (
     <div>

@@ -9,6 +9,9 @@ function VentaPasajes() {
   const [aeropuertos, setAeropuertos] = useState([]);
   const [vuelos, setVuelos] = useState([]);
   const [origen, setOrigen] = useState('');
+  const [fecha1, setFecha1] = useState('');
+  const [fecha2, setfecha2] = useState('');
+  console.log(fecha1, fecha2, origen)
   useEffect(() => {
     obtenerAeropuertos();
   }, []);
@@ -17,15 +20,28 @@ function VentaPasajes() {
     setAeropuertos( await getAeropuertos());
   }
   const handleClickBuscarVuelo = ((e) => {
-    obtenerVuelos();
-    });
-
+    e.preventDefault();
+    if(fecha1 != '' || fecha2 != '' || origen != '') {
+      obtenerVuelos();
+    }
+      else{
+        alert("¡Ingrese todos los datos para poder mostrarle los vuelos disponibles!")
+    }
+  })
     const obtenerVuelos = async () => {
       setVuelos( await getVuelos());
     }
 
     const handleChangeOrigen = ((e) => {
       setOrigen(e.target.value)
+    })
+
+    const handleChangeFecha1 = ((e) => {
+      setFecha1(e.target.value)
+    })
+
+    const handleChangeFecha2 = ((e) => {
+      setfecha2(e.target.value)
     })
 
   return (
@@ -35,15 +51,15 @@ function VentaPasajes() {
       <select class="form-select"  name="origen" aria-label="Default select example" style={{width: '20%', marginRight: '2%', marginLeft: '15%', }} onChange={handleChangeOrigen} >
             <option selected> Aeropuerto Origen</option>
             {aeropuertos.map((aeropuertos) =>
-          <option key={aeropuertos.id} value={aeropuertos.codigo} >{aeropuertos.nombre}</option>
+          <option key={aeropuertos.id} value={aeropuertos.nombre} >{aeropuertos.nombre}</option>
         )}
           </select>
 
           <label for="fecha1" style={{marginRight: '2%', }}>Entre fechas : </label>
-          <input type="date" id="fecha1" name="fecha1"/>
+          <input type="date" id="fecha1" name="fecha1" onChange={handleChangeFecha1}/>
     
           <label for="fecha2" style={{marginLeft: '1%', }}> - </label>
-          <input type="date" id="fecha2" name="fecha2" style={{marginLeft: '1%', }}/>
+          <input type="date" id="fecha2" name="fecha2" style={{marginLeft: '1%'}} onChange={handleChangeFecha2}/>
       
           <button type="button" class="btn btn-primary" style={{marginLeft: '5%', }}  onClick={handleClickBuscarVuelo}>Buscar vuelos</button>
       </div>
@@ -52,8 +68,8 @@ function VentaPasajes() {
         <thead>
         <tr class="table-active">
           <th scope="col">Codigo</th>
-          <th scope="col">Aeropuerto Origen</th>
-          <th scope="col">Aeropuerto Destino</th>
+          <th scope="col">Origen</th>
+          <th scope="col">Destino</th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Avion</th>
@@ -61,14 +77,17 @@ function VentaPasajes() {
         </tr>
         </thead>
         <tbody>
-        {vuelos.map((vuelos) =>
+          {vuelos
+        .filter(n => n.fecha > fecha1 && n.fecha < fecha2 && n.origen_aero === origen)
+        // .filter(n => n.origen_aero === origen )
+        .map((vuelos) =>
                   <tr key={vuelos.codigo}>
                     <th scope="col">{vuelos.codigo}</th>
-                    <td >{vuelos.cod_origen_aero}</td>
-                    <td >{vuelos.cod_destino_aero}</td>
+                    <td >{vuelos.origen_aero.ciudad.nombre}</td>
+                    <td >{vuelos.destino_aero.ciudad.nombre}</td>
                     <td >{vuelos.fecha}</td>
                     <td >{vuelos.hora}</td>
-                    <td >{vuelos.cod_avion}</td>
+                    <td >{vuelos.avion.marca +' '} {vuelos.avion.modelo}</td>
                     <td> <Link to={"" + vuelos.codigo}><button className="btn btn-primary" type="button" >Comprar</button> </Link></td>
                     </tr>
         )}

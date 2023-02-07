@@ -19,3 +19,23 @@ export async function getPasajeros() {
       alert(e);
    }
   }
+
+  export async function updatePasajero(id, pasajero) {
+    try{
+      await axios.put(`http://localhost:8000/pasajeros/${id}`, pasajero);
+     }catch (e) {
+       alert(e);
+     }
+  }
+
+  export async function getPasajeroByID(id) {
+    let datos_prop = [];
+    try {
+      let response = await axios.get(`http://localhost:8000/pasajeros/${id}`);
+      datos_prop = response.data;
+    } catch (e) {
+      alert(e);
+    }
+    
+    return datos_prop;
+  }

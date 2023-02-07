@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {updateAvion, getAvionByID} from '../Services/aviones-services'
 
 function FormAviones() {
-    const [avion, setAvion] = useState([]);
+    const [avion, setAvion] = useState(null);
     const { codigoAvion } = useParams();
     const navigate = useNavigate()
     const modificar= async () => {
@@ -30,7 +30,13 @@ function FormAviones() {
             setAvion(prev => { return { ...prev, [e.target.name]: e.target.value } });
            });
    
-
+           if( avion === null){
+            return (
+            <div class="d-flex justify-content-center" style={{marginTop:'5%'}}>
+            <div class="spinner-border" role="status">
+            </div>
+          </div>
+          );}
   return (
     <div>
       <p class="text-center" style={{marginTop: '2%', fontWeight: '500'}}>Formulario de modificacion avion {codigoAvion}</p>

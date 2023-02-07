@@ -38,6 +38,14 @@ function Vuelos() {
 
     const handleClickVuelo = ((e) => {
       e.preventDefault();
+      if(vuelos.filter(elemento=> elemento.codigo===vuelo.codigo).length > 0){
+        alert("¡el codigo debe ser unico!")
+        return;
+      }
+      if(vuelo.codigo.length != 5){
+        alert("¡el codigo debe contener 5 caracteres!")
+        return;
+      }
       addVuelo(vuelo);
       obtenerVuelos();
       });
@@ -51,8 +59,8 @@ function Vuelos() {
         <thead>
         <tr class="table-active">
           <th scope="col">Codigo</th>
-          <th scope="col">Aeropuerto Origen</th>
-          <th scope="col">Aeropuerto Destino</th>
+          <th scope="col">Origen</th>
+          <th scope="col">Destino</th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Avion</th>

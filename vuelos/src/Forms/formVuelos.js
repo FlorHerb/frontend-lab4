@@ -5,7 +5,7 @@ import {updateVuelo, getVueloByID} from '../Services/vuelos-services'
 import { getAviones } from "../Services/aviones-services";
 
 function FormVuelos() {
-    const [vuelo, setVuelo] = useState([]);
+    const [vuelo, setVuelo] = useState(null);
     const [aviones, setAviones] = useState([]);
     const { codigoVuelo } = useParams();
     const navigate = useNavigate()
@@ -38,7 +38,13 @@ function FormVuelos() {
               setVuelo(prev => { return { ...prev, [e.target.name]: e.target.value } });
               });
       
-
+              if( vuelo === null){
+                return (
+                <div class="d-flex justify-content-center" style={{marginTop:'5%'}}>
+                <div class="spinner-border" role="status">
+                </div>
+              </div>
+              );}
   return (
     <div>
       <p class="text-center" style={{marginTop: '2%', fontWeight: '500'}}>Formulario de modificacion para el vuelo: {codigoVuelo}</p>

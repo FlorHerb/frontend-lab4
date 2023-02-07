@@ -27,6 +27,14 @@ function Aviones() {
 
     const handleClickAvion = ((e) => {
       e.preventDefault();
+      if(aviones.filter(elemento=> elemento.codigo===avion.codigo).length > 0){
+        alert("¡el codigo debe ser unico!")
+        return;
+      }
+      if(avion.codigo.length != 3){
+        alert("¡el codigo debe contener 3 caracteres!")
+        return;
+      }
       addAvion(avion);
       obtenerAviones();
       });

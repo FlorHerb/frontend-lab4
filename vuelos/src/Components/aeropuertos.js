@@ -35,6 +35,14 @@ function Aeropuertos() {
 
     const handleClickAeropuerto = ((e) => {
       e.preventDefault();
+      if(aeropuertos.filter(elemento=> elemento.codigo===aeropuerto.codigo).length > 0){
+        alert("¡el codigo debe ser unico!")
+        return;
+      }
+      if(aeropuerto.codigo.length != 4){
+        alert("¡el codigo debe contener 4 caracteres!")
+        return;
+      }
       addAeropuerto(aeropuerto);
       obtenerAeropuertos();
       });

@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import {updateAeropuerto, getAeropuertoByID} from '../Services/aeropuetos-services'
-import { getCiudades } from '../Services/ciudades-services'
+// import { getCiudades } from '../Services/ciudades-services'
 
 function FormAeropuertos() {
-    const [aeropuerto, setAeropuerto] = useState([]);
-    const [ciudades, setCiudades] = useState([]);
+    const [aeropuerto, setAeropuerto] = useState(null);
+  // const [ciudades, setCiudades] = useState([]);
     const { codigoAeropuerto } = useParams();
     const navigate = useNavigate()
     
     useEffect(() => {
       obtenerAeropuerto()
-      obtenerCiudades();
+      //obtenerCiudades();
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
   
@@ -20,9 +20,9 @@ function FormAeropuertos() {
       setAeropuerto( await getAeropuertoByID(codigoAeropuerto));
     }
     
-    const obtenerCiudades = async () => {
-      setCiudades( await getCiudades());
-    }
+    // const obtenerCiudades = async () => {
+    //   setCiudades( await getCiudades());
+    // }
 
     const handleClick = ((e) => {
       e.preventDefault();
@@ -38,6 +38,13 @@ function FormAeropuertos() {
         setAeropuerto(prev => { return { ...prev, [e.target.name]: e.target.value } });
         });
 
+  if( aeropuerto === null){
+    return (
+    <div class="d-flex justify-content-center" style={{marginTop:'5%'}}>
+    <div class="spinner-border" role="status">
+    </div>
+  </div>
+  );}
   return (
     <div>
       <p class="text-center" style={{marginTop: '2%', fontWeight: '500'}}>Formulario de modificacion aeropuerto {codigoAeropuerto}</p>
@@ -52,7 +59,7 @@ function FormAeropuertos() {
     </div>
     <div class="mb-3">
         <label for="nombreAeropuerto" class="form-label">Nombre Aeropuerto</label>
-        <input type="nombre" class="form-control"  name="nombre" onChange={handleChange}/>
+        <input type="nombre" class="form-control"  name="nombre" value={aeropuerto.nombre} onChange={handleChange}/>
     </div>
     {/* <select class="form-select"  name="id_ciudad" aria-label="Default select example" onChange={handleChange} style={{marginBottom: '5%'}}>
             <option selected> Ciudad</option>
@@ -63,7 +70,7 @@ function FormAeropuertos() {
 
     <div class="mb-3">
         <label for="nombreAeropuerto" class="form-label">Cuidad</label>
-        <input type="nombre" class="form-control"  value={aeropuerto.ciudad.nombre}/>
+        <input type="nombre" class="form-control"  value={aeropuerto.ciudad.nombre} disabled/>
     </div>
 
     <button type="submit" class="btn btn-primary" onClick={handleClick} >Modificar</button>
