@@ -54,14 +54,14 @@ function VentaPasajes() {
       <select class="form-select"  name="origen" aria-label="Default select example" style={{width: '20%', marginRight: '2%', marginLeft: '15%', }} onChange={handleChangeOrigen} >
             <option selected> Aeropuerto Origen</option>
             {aeropuertos.map((aeropuertos) =>
-          <option key={aeropuertos.id} value={aeropuertos.nombre} >{aeropuertos.codigo+' '}{aeropuertos.nombre}</option>
+          <option key={aeropuertos.codigo} value={aeropuertos.nombre} >{aeropuertos.codigo+' '}{aeropuertos.nombre}</option>
         )}
           </select>
 
-          <label for="fecha1" style={{marginRight: '2%', }}>Entre fechas : </label>
+          <label htmlFor="fecha1" style={{marginRight: '2%', }}>Entre fechas : </label>
           <input type="date" id="fecha1" name="fecha1" onChange={handleChangeFecha1}/>
     
-          <label for="fecha2" style={{marginLeft: '1%', }}> - </label>
+          <label htmlFor="fecha2" style={{marginLeft: '1%', }}> - </label>
           <input type="date" id="fecha2" name="fecha2" style={{marginLeft: '1%'}} onChange={handleChangeFecha2}/>
       
           <button type="button" class="btn btn-primary" style={{marginLeft: '5%', }}  onClick={handleClickBuscarVuelo} disabled={origen === '' || fecha1 === '' || fecha2 === ''}>Buscar vuelos</button>

@@ -6,7 +6,7 @@ export async function getCiudades() {
       let response = await axios.get('http://localhost:8000/ciudades');
       datos_prop = response.data;
     } catch (e) {
-      alert(e);
+      alert(e.response.data.detail);
     }
     
     return datos_prop;

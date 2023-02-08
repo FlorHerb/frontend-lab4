@@ -31,10 +31,6 @@ function Aviones() {
         alert("¡el codigo debe ser unico!")
         return;
       }
-      if(avion.codigo.length != 3){
-        alert("¡el codigo debe contener 3 caracteres!")
-        return;
-      }
       addAvion(avion);
       obtenerAviones();
       });
@@ -55,7 +51,7 @@ function Aviones() {
         </thead>
         <tbody>
           {aviones.map((aviones) =>
-                  <tr key={aviones.id}>
+                  <tr key={aviones.codigo}>
                     <th scope="col"><Link  to={"" + aviones.codigo}>{aviones.codigo}</Link></th>
                     <td >{aviones.marca}</td>
                     <td >{aviones.modelo}</td>
@@ -80,20 +76,20 @@ function Aviones() {
       </div>
       <div class="modal-body">
       <div class="mb-3">
-        <label for="codigoAvion" class="form-label">Codigo</label>
+        <label htmlFor="codigoAvion" class="form-label">Codigo</label>
         <input type="text" class="form-control" id="codigoAvion" name='codigo' onChange={handleChangeAvion}/>
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 3 letras y ser UNICO.</div>
     </div>
     <div class="mb-3">
-        <label for="marca" class="form-label">Marca</label>
+        <label htmlFor="marca" class="form-label">Marca</label>
         <input type="text" class="form-control" id="marca" name='marca'  onChange={handleChangeAvion}/>
     </div>
     <div class="mb-3">
-        <label for="modelo" class="form-label">Modelo</label>
+        <label htmlFor="modelo" class="form-label">Modelo</label>
         <input type="text" class="form-control" id="modelo" name='modelo' onChange={handleChangeAvion} />
     </div>
     <div class="mb-3">
-        <label for="capacidad" class="form-label">Capacidad de Pasajeros</label>
+        <label htmlFor="capacidad" class="form-label">Capacidad de Pasajeros</label>
         <input type="text" class="form-control" id="capacidad" name='capacidad' onChange={handleChangeAvion}/>
     </div>
 

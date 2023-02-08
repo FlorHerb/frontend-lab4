@@ -79,7 +79,7 @@ function FormVentaPasajes() {
 
      <form>
      <div class="mb-3">
-        <label for="nombrePasajero" class="form-label">Codigo Vuelo</label>
+        <label htmlFor="nombrePasajero" class="form-label">Codigo Vuelo</label>
         <input type="nombre" class="form-control"  value={codigoVuelo} id="cod_vuelo" name='cod_vuelo' onChange={handleChangePasaje} disabled />
     </div>
     
@@ -115,11 +115,11 @@ function FormVentaPasajes() {
       </div>
       <div class="modal-body">
       <div class="mb-3">
-        <label for="codigoAeropuerto" class="form-label">Nombre</label>
+        <label htmlFor="codigoAeropuerto" class="form-label">Nombre</label>
         <input type="codigo" class="form-control" id="codigoAvion"  name='nombre' onChange={handleChangePasajero} />
       </div>
         <div class="mb-3">
-            <label for="origen" class="form-label">Dni</label>
+            <label htmlFor="origen" class="form-label">Dni</label>
             <input type="Origen" class="form-control" id="Origen"  name='dni' onChange={handleChangePasajero}/>
         </div>
       </div>

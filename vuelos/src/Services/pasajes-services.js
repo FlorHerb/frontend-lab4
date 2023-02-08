@@ -6,7 +6,7 @@ export async function getPasajes() {
       let response = await axios.get('http://localhost:8000/pasajes');
       datos_prop = response.data;
     } catch (e) {
-      alert(e);
+      alert(e.response.data.detail);
     }
     
     return datos_prop;
@@ -18,7 +18,7 @@ export async function getPasajes() {
       let response = await axios.get(`http://localhost:8000/pasajes/${id}`);
       datos_prop = response.data;
     } catch (e) {
-      alert(e);
+      alert(e.response.data.detail);
     }
     
     return datos_prop;
@@ -28,7 +28,7 @@ export async function getPasajes() {
     try {
     await axios.post(`http://localhost:8000/pasajes`, {...Pasaje, id:null})
     } catch (e) {
-      alert(e);
+      alert(e.response.data.detail);
    }
   }
 
@@ -36,7 +36,7 @@ export async function getPasajes() {
     try{
      await axios.delete(`http://localhost:8000/pasajes/${id}`);
     }catch (e) {
-      alert(e);
+      alert(e.response.data.detail);
     }
   }
 
@@ -44,6 +44,6 @@ export async function getPasajes() {
     try{
       await axios.put(`http://localhost:8000/pasajes/${id}`, pasaje);
      }catch (e) {
-       alert(e);
+      alert(e.response.data.detail);
      }
   }

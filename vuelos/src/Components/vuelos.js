@@ -20,7 +20,7 @@ function Vuelos() {
     obtenerVuelos();
     obtenerAviones();
     obtenerAeropuertos()
-  }, [setvuelos]);
+  }, []);
 
   const obtenerVuelos = async () => {
     setvuelos( await getVuelos());
@@ -49,10 +49,6 @@ function Vuelos() {
         alert("¡el codigo debe ser unico!")
         return;
       }
-      if(vuelo.codigo.length != 5){
-        alert("¡el codigo debe contener 5 caracteres!")
-        return;
-      }
       addVuelo(vuelo);
       obtenerVuelos();
       });
@@ -78,7 +74,7 @@ function Vuelos() {
         </tr>
         </thead>
         <tbody>  {vuelos.map((vuelos) =>
-                  <tr key={vuelos.id}>
+                  <tr key={vuelos.codigo}>
                     <th scope="col"><Link to={"" + vuelos.codigo}>{vuelos.codigo}</Link></th>
                     <td >{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.nombre}</td>
                     <td >{vuelos.origen_aero.ciudad.nombre}</td>
@@ -106,7 +102,7 @@ function Vuelos() {
       </div>
       <div class="modal-body">
       <div class="mb-3">
-        <label for="codigoAeropuerto" class="form-label">Codigo Vuelo</label>
+        <label htmlFor="codigoAeropuerto" class="form-label">Codigo Vuelo</label>
         <input type="codigo" class="form-control" id="codigoAvion"  name='codigo' onChange={handleChangeVuelo} />
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 5 letras y ser UNICO.</div>
       </div>
@@ -127,11 +123,11 @@ function Vuelos() {
           </select>
 
         <div class="mb-3" style={{display:'grid'}}>
-            <label for="fecha" class="form-label">Fecha</label>
+            <label htmlFor="fecha" class="form-label">Fecha</label>
               <input type="date" id="fecha" name="fecha" style={{height:'140%'}} onChange={handleChangeVuelo}/>
         </div>
         <div class="mb-3" style={{display:'grid', marginTop:'5%'}}>
-          <label for="appt">Hora</label>
+          <label htmlFor="appt">Hora</label>
           <input type="time" id="appt" style={{height:'140%', width:'40%'}}  name='hora' onChange={handleChangeVuelo}/>
         </div>
         <div class="mb-3" >

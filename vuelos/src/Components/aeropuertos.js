@@ -39,10 +39,6 @@ function Aeropuertos() {
         alert("¡el codigo debe ser unico!")
         return;
       }
-      if(aeropuerto.codigo.length != 4){
-        alert("¡el codigo debe contener 4 caracteres!")
-        return;
-      }
       addAeropuerto(aeropuerto);
       obtenerAeropuertos();
       });
@@ -88,12 +84,12 @@ function Aeropuertos() {
       </div>
       <div class="modal-body">
       <div class="mb-3">
-        <label for="codigoAeropuerto" class="form-label">Codigo Aeropuerto</label>
+        <label htmlFor="codigoAeropuerto" class="form-label">Codigo Aeropuerto</label>
         <input type="text" class="form-control" id="codigoAeropuerto" name="codigo" onChange={handleChangeAeropuerto} />
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 4 letras y ser UNICO.</div>
     </div>
     <div class="mb-3">
-        <label for="nombreAeropuerto" class="form-label">Nombre Aeropuerto</label>
+        <label htmlFor="nombreAeropuerto" class="form-label">Nombre Aeropuerto</label>
         <input type="text" class="form-control" id="nombreAeropuerto" name="nombre" onChange={handleChangeAeropuerto} />
     </div>
     <select class="form-select"  name="id_ciudad" aria-label="Default select example" onChange={handleChangeAeropuerto} >

@@ -54,11 +54,11 @@ function FormAeropuertos() {
 
      <form>
     <div class="mb-3">
-        <label for="codigoAeropuerto" class="form-label">Codigo Aeropuerto</label>
+        <label htmlFor="codigoAeropuerto" class="form-label">Codigo Aeropuerto</label>
         <input type="codigo" class="form-control" id="codigo" value={codigoAeropuerto} disabled />
     </div>
     <div class="mb-3">
-        <label for="nombreAeropuerto" class="form-label">Nombre Aeropuerto</label>
+        <label htmlFor="nombreAeropuerto" class="form-label">Nombre Aeropuerto</label>
         <input type="nombre" class="form-control"  name="nombre" value={aeropuerto.nombre} onChange={handleChange}/>
     </div>
     {/* <select class="form-select"  name="id_ciudad" aria-label="Default select example" onChange={handleChange} style={{marginBottom: '5%'}}>
@@ -69,7 +69,7 @@ function FormAeropuertos() {
     </select> */}
 
     <div class="mb-3">
-        <label for="nombreAeropuerto" class="form-label">Cuidad</label>
+        <label htmlFor="nombreAeropuerto" class="form-label">Cuidad</label>
         <input type="nombre" class="form-control"  value={aeropuerto.ciudad.nombre} disabled/>
     </div>
 
