@@ -71,8 +71,8 @@ function Vuelos() {
         <tbody>  {vuelos.map((vuelos) =>
                   <tr key={vuelos.id}>
                     <th scope="col"><Link to={"" + vuelos.codigo}>{vuelos.codigo}</Link></th>
-                    <td >{vuelos.origen_aero.ciudad.nombre}</td>
-                    <td >{vuelos.destino_aero.ciudad.nombre}</td>
+                    <td >{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.ciudad.nombre}</td>
+                    <td >{vuelos.origen_aero.codigo+' '+vuelos.destino_aero.ciudad.nombre}</td>
                     <td >{vuelos.fecha}</td>
                     <td >{vuelos.hora}</td>
                     <td >{vuelos.cod_avion}</td>

@@ -11,7 +11,8 @@ function VentaPasajes() {
   const [origen, setOrigen] = useState('');
   const [fecha1, setFecha1] = useState('');
   const [fecha2, setfecha2] = useState('');
-  console.log(fecha1, fecha2, origen)
+  console.log(vuelos.filter(n => n.fecha >= fecha1 && n.fecha <= fecha2 &&  n.origen_aero.nombre == origen))
+  console.log(vuelos.length)
   useEffect(() => {
     obtenerAeropuertos();
   }, []);
@@ -20,13 +21,12 @@ function VentaPasajes() {
     setAeropuertos( await getAeropuertos());
   }
   const handleClickBuscarVuelo = ((e) => {
-    e.preventDefault();
-    if(fecha1 != '' || fecha2 != '' || origen != '') {
-      obtenerVuelos();
+    obtenerVuelos();
+    if(vuelos.length <= 0){
+      alert("¡No hay pasajes para mostrar!")
+      return;
     }
-      else{
-        alert("¡Ingrese todos los datos para poder mostrarle los vuelos disponibles!")
-    }
+
   })
     const obtenerVuelos = async () => {
       setVuelos( await getVuelos());
@@ -51,7 +51,7 @@ function VentaPasajes() {
       <select class="form-select"  name="origen" aria-label="Default select example" style={{width: '20%', marginRight: '2%', marginLeft: '15%', }} onChange={handleChangeOrigen} >
             <option selected> Aeropuerto Origen</option>
             {aeropuertos.map((aeropuertos) =>
-          <option key={aeropuertos.id} value={aeropuertos.nombre} >{aeropuertos.nombre}</option>
+          <option key={aeropuertos.id} value={aeropuertos.nombre} >{aeropuertos.codigo+' '}{aeropuertos.nombre}</option>
         )}
           </select>
 
@@ -78,13 +78,12 @@ function VentaPasajes() {
         </thead>
         <tbody>
           {vuelos
-        .filter(n => n.fecha > fecha1 && n.fecha < fecha2 && n.origen_aero === origen)
-        // .filter(n => n.origen_aero === origen )
+        .filter(n => n.fecha >= fecha1 && n.fecha <= fecha2 &&  n.origen_aero.nombre == origen)
         .map((vuelos) =>
                   <tr key={vuelos.codigo}>
                     <th scope="col">{vuelos.codigo}</th>
-                    <td >{vuelos.origen_aero.ciudad.nombre}</td>
-                    <td >{vuelos.destino_aero.ciudad.nombre}</td>
+                    <td >{vuelos.origen_aero.codigo+' '}{vuelos.origen_aero.ciudad.nombre}</td>
+                    <td >{vuelos.origen_aero.codigo+' '}{vuelos.destino_aero.ciudad.nombre}</td>
                     <td >{vuelos.fecha}</td>
                     <td >{vuelos.hora}</td>
                     <td >{vuelos.avion.marca +' '} {vuelos.avion.modelo}</td>
