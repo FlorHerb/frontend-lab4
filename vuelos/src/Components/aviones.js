@@ -1,8 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getAviones, deleteAvion, addAvion } from "../Services/aviones-services";
 
 function Aviones() {
+  const [aviones, setAviones] = useState([]);
+  const [avion, setAvion] = useState([]);
+
+  useEffect(() => {
+    obtenerAviones();
+  }, []);
+
+  const obtenerAviones = async () => {
+    setAviones( await getAviones());
+  }
+
+  const borrar = async (codigo) => {
+    await deleteAvion(codigo);
+    obtenerAviones();
+    }
+
+    const handleChangeAvion = ((e) => {
+      setAvion(prev => { return { ...prev, [e.target.name]: e.target.value } });
+    });
+
+    const handleClickAvion = ((e) => {
+      e.preventDefault();
+      if(aviones.filter(elemento=> elemento.codigo===avion.codigo).length > 0){
+        alert("¡el codigo debe ser unico!")
+        return;
+      }
+      if(avion.codigo.length != 3){
+        alert("¡el codigo debe contener 3 caracteres!")
+        return;
+      }
+      addAvion(avion);
+      obtenerAviones();
+      });
+
   return (
     <div>
     <p class="text-center" style={{marginTop: '2%', fontWeight: '500'}}>Administracion de Aviones</p>
@@ -18,13 +54,15 @@ function Aviones() {
         </tr>
         </thead>
         <tbody>
-                  <tr>
-                    <th scope="col"><Link to={"" + 'QSCV'}>QSCV</Link></th>
-                    <td >Boeing</td>
-                    <td >747</td>
-                    <td >250 Pasajeros</td>
-                    <td><button className="btn btn-primary" type="button" >Eliminar</button></td>
+          {aviones.map((aviones) =>
+                  <tr key={aviones.id}>
+                    <th scope="col"><Link  to={"" + aviones.codigo}>{aviones.codigo}</Link></th>
+                    <td >{aviones.marca}</td>
+                    <td >{aviones.modelo}</td>
+                    <td >{aviones.capacidad} Pasajeros</td>
+                    <td><button className="btn btn-primary" type="button" onClick={() => borrar(aviones.codigo)}>Eliminar</button></td>
                     </tr>
+          )}
          </tbody>
       </table>
       
@@ -43,26 +81,26 @@ function Aviones() {
       <div class="modal-body">
       <div class="mb-3">
         <label for="codigoAvion" class="form-label">Codigo</label>
-        <input type="codigo" class="form-control" id="codigoAvion"/>
+        <input type="text" class="form-control" id="codigoAvion" name='codigo' onChange={handleChangeAvion}/>
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 3 letras y ser UNICO.</div>
     </div>
     <div class="mb-3">
-        <label for="nombreAvion" class="form-label">Marca</label>
-        <input type="nombre" class="form-control" id="nombreAeropuerto"/>
+        <label for="marca" class="form-label">Marca</label>
+        <input type="text" class="form-control" id="marca" name='marca'  onChange={handleChangeAvion}/>
     </div>
     <div class="mb-3">
-        <label for="cuidad" class="form-label">Modelo</label>
-        <input type="cuidad" class="form-control" id="cuidad" />
+        <label for="modelo" class="form-label">Modelo</label>
+        <input type="text" class="form-control" id="modelo" name='modelo' onChange={handleChangeAvion} />
     </div>
     <div class="mb-3">
-        <label for="pais" class="form-label">Capacidad de Pasajeros</label>
-        <input type="pais" class="form-control" id="pais" />
+        <label for="capacidad" class="form-label">Capacidad de Pasajeros</label>
+        <input type="text" class="form-control" id="capacidad" name='capacidad' onChange={handleChangeAvion}/>
     </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-        <button type="button" class="btn btn-primary">Cargar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={handleClickAvion}>Cargar</button>
       </div>
     </div>
   </div>
