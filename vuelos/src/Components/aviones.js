@@ -7,7 +7,6 @@ import { getAviones, deleteAvion, addAvion } from "../Services/aviones-services"
 function Aviones() {
   const [aviones, setAviones] = useState([]);
   const [avion, setAvion] = useState([]);
-
   useEffect(() => {
     obtenerAviones();
   }, []);
@@ -19,6 +18,11 @@ function Aviones() {
   const borrar = async (codigo) => {
     await deleteAvion(codigo);
     obtenerAviones();
+    if(aviones.filter(elemento=> elemento.codigo===avion.codigo).length == 0){
+      console.log(aviones.length)
+      alert("¡se borro el avion "+codigo+'!')
+          return;
+      } 
     }
 
     const handleChangeAvion = ((e) => {
@@ -67,7 +71,7 @@ function Aviones() {
   Nuevo Avion
 </button>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

@@ -19,7 +19,8 @@ function Pasajes() {
 
   const borrar = async (codigo) => {
     await deletePasaje(codigo);
-    obtenerPasajes();
+    
+          obtenerPasajes();
     }
 
   return (

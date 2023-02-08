@@ -37,6 +37,7 @@ function Vuelos() {
   const borrar = async (codigo) => {
     await deleteVuelo(codigo);
     obtenerVuelos();
+
     }
 
     const handleChangeVuelo = ((e) => {
@@ -48,7 +49,7 @@ function Vuelos() {
       if(vuelos.filter(elemento=> elemento.codigo===vuelo.codigo).length > 0){
         alert("¡el codigo debe ser unico!")
         return;
-      }
+      };
       addVuelo(vuelo);
       obtenerVuelos();
       });
@@ -76,13 +77,13 @@ function Vuelos() {
         <tbody>  {vuelos.map((vuelos) =>
                   <tr key={vuelos.codigo}>
                     <th scope="col"><Link to={"" + vuelos.codigo}>{vuelos.codigo}</Link></th>
-                    <td >{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.nombre}</td>
-                    <td >{vuelos.origen_aero.ciudad.nombre}</td>
-                    <td >{vuelos.destino_aero.codigo+' '+vuelos.destino_aero.nombre}</td>
-                    <td >{vuelos.destino_aero.ciudad.nombre}</td>
-                    <td >{vuelos.fecha}</td>
-                    <td >{vuelos.hora}</td>
-                    <td >{vuelos.cod_avion}</td>
+                    <td>{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.nombre}</td>
+                    <td>{vuelos.origen_aero.ciudad.nombre}</td>
+                    <td>{vuelos.destino_aero.codigo+' '+vuelos.destino_aero.nombre}</td>
+                    <td>{vuelos.destino_aero.ciudad.nombre}</td>
+                    <td>{vuelos.fecha}</td>
+                    <td>{vuelos.hora}</td>
+                    <td>{vuelos.cod_avion}</td>
                     <td><button className="btn btn-primary" type="button" onClick={() => Disponibilidad(vuelos.codigo)}>Disponibilidad</button></td>
                     <td><button className="btn btn-primary" type="button" onClick={() => borrar(vuelos.codigo)}>Eliminar</button></td>
                     </tr>
@@ -93,7 +94,7 @@ function Vuelos() {
         Nuevo Vuelo
       </button>
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

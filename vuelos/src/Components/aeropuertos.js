@@ -27,7 +27,12 @@ function Aeropuertos() {
   const borrar = async (codigo) => {
     await deleteAeropuerto(codigo);
     obtenerAeropuertos();
+    if(aeropuertos.filter(elemento=> elemento.codigo===aeropuerto.codigo).length === 0){
+    alert("¡se borro el aeropuerto "+codigo+'!')
+        return;
     }
+    }
+    
 
     const handleChangeAeropuerto = ((e) => {
       setAeropuerto(prev => { return { ...prev, [e.target.name]: e.target.value } });
@@ -75,7 +80,7 @@ function Aeropuertos() {
   Nuevo Aeropuerto
 </button>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
