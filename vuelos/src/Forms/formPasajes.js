@@ -58,23 +58,23 @@ function FormPasajes() {
 
      <form>
     <div class="mb-3">
-        <label for="codigoPasaje" class="form-label">Codigo </label>
+        <label htmlFor="codigoPasaje" class="form-label">Codigo </label>
         <input type="codigo" class="form-control" id="codigoAvion" value={codigoPasaje} disabled />
     </div>
     <div class="mb-3">
-        <label for="nombre" class="form-label">Codigo de vuelo</label>
+        <label htmlFor="nombre" class="form-label">Codigo de vuelo</label>
         <input type="nombre" class="form-control" id="nombre" value={pasaje.cod_vuelo} disabled/>
     </div>
     <div class="mb-3">
-        <label for="nombre" class="form-label">Nombre Pasajero</label>
+        <label htmlFor="nombre" class="form-label">Nombre Pasajero</label>
         <input type="nombre" class="form-control" id="nombre"  name="nombre" onChange={handleChange}/>
     </div>
     <div class="mb-3">
-        <label for="dni" class="form-label">Dni Pasajero </label>
+        <label htmlFor="dni" class="form-label">Dni Pasajero </label>
         <input type="dni" class="form-control" id="dni" value={pasaje.id_pasajero} disabled/>
     </div>
     <div class="mb-3">
-        <label for="asiento" class="form-label">Numero de asiento </label>
+        <label htmlFor="asiento" class="form-label">Numero de asiento </label>
         <input type="asiento" class="form-control" id="asiento" value={pasaje.nro_asiento}  name="nro_asiento" disabled/>
     </div>
 

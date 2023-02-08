@@ -7,7 +7,6 @@ import { getAviones, deleteAvion, addAvion } from "../Services/aviones-services"
 function Aviones() {
   const [aviones, setAviones] = useState([]);
   const [avion, setAvion] = useState([]);
-
   useEffect(() => {
     obtenerAviones();
   }, []);
@@ -19,6 +18,11 @@ function Aviones() {
   const borrar = async (codigo) => {
     await deleteAvion(codigo);
     obtenerAviones();
+    if(aviones.filter(elemento=> elemento.codigo===avion.codigo).length == 0){
+      console.log(aviones.length)
+      alert("¡se borro el avion "+codigo+'!')
+          return;
+      } 
     }
 
     const handleChangeAvion = ((e) => {
@@ -29,10 +33,6 @@ function Aviones() {
       e.preventDefault();
       if(aviones.filter(elemento=> elemento.codigo===avion.codigo).length > 0){
         alert("¡el codigo debe ser unico!")
-        return;
-      }
-      if(avion.codigo.length != 3){
-        alert("¡el codigo debe contener 3 caracteres!")
         return;
       }
       addAvion(avion);
@@ -55,7 +55,7 @@ function Aviones() {
         </thead>
         <tbody>
           {aviones.map((aviones) =>
-                  <tr key={aviones.id}>
+                  <tr key={aviones.codigo}>
                     <th scope="col"><Link  to={"" + aviones.codigo}>{aviones.codigo}</Link></th>
                     <td >{aviones.marca}</td>
                     <td >{aviones.modelo}</td>
@@ -71,7 +71,7 @@ function Aviones() {
   Nuevo Avion
 </button>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -80,20 +80,20 @@ function Aviones() {
       </div>
       <div class="modal-body">
       <div class="mb-3">
-        <label for="codigoAvion" class="form-label">Codigo</label>
+        <label htmlFor="codigoAvion" class="form-label">Codigo</label>
         <input type="text" class="form-control" id="codigoAvion" name='codigo' onChange={handleChangeAvion}/>
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 3 letras y ser UNICO.</div>
     </div>
     <div class="mb-3">
-        <label for="marca" class="form-label">Marca</label>
+        <label htmlFor="marca" class="form-label">Marca</label>
         <input type="text" class="form-control" id="marca" name='marca'  onChange={handleChangeAvion}/>
     </div>
     <div class="mb-3">
-        <label for="modelo" class="form-label">Modelo</label>
+        <label htmlFor="modelo" class="form-label">Modelo</label>
         <input type="text" class="form-control" id="modelo" name='modelo' onChange={handleChangeAvion} />
     </div>
     <div class="mb-3">
-        <label for="capacidad" class="form-label">Capacidad de Pasajeros</label>
+        <label htmlFor="capacidad" class="form-label">Capacidad de Pasajeros</label>
         <input type="text" class="form-control" id="capacidad" name='capacidad' onChange={handleChangeAvion}/>
     </div>
 

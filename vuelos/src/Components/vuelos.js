@@ -4,11 +4,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getVuelos, deleteVuelo, addVuelo } from "../Services/vuelos-services";
 import { getAviones } from "../Services/aviones-services";
+import { getAeropuertos } from "../Services/aeropuetos-services";
 
 function Vuelos() {
   const [vuelos, setvuelos] = useState([]);
   const [vuelo, setvuelo] = useState([]);
   const [aviones, setAviones] = useState([]);
+  const [aeropuertos, setAeropuertos] = useState([]);
   const navigate = useNavigate()
   const Disponibilidad = async (id) => {
     navigate('/disponibilidad/'+id);
@@ -16,7 +18,8 @@ function Vuelos() {
 
   useEffect(() => {
     obtenerVuelos();
-    obtenerAviones()
+    obtenerAviones();
+    obtenerAeropuertos()
   }, []);
 
   const obtenerVuelos = async () => {
@@ -27,9 +30,14 @@ function Vuelos() {
     setAviones( await getAviones());
   }
 
+  const obtenerAeropuertos = async () => {
+    setAeropuertos( await getAeropuertos());
+  }
+
   const borrar = async (codigo) => {
     await deleteVuelo(codigo);
     obtenerVuelos();
+
     }
 
     const handleChangeVuelo = ((e) => {
@@ -41,11 +49,7 @@ function Vuelos() {
       if(vuelos.filter(elemento=> elemento.codigo===vuelo.codigo).length > 0){
         alert("¡el codigo debe ser unico!")
         return;
-      }
-      if(vuelo.codigo.length != 5){
-        alert("¡el codigo debe contener 5 caracteres!")
-        return;
-      }
+      };
       addVuelo(vuelo);
       obtenerVuelos();
       });
@@ -59,7 +63,9 @@ function Vuelos() {
         <thead>
         <tr class="table-active">
           <th scope="col">Codigo</th>
+          <th scope="col">Aero Origen</th>
           <th scope="col">Origen</th>
+          <th scope="col">Aero Destino</th>
           <th scope="col">Destino</th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
@@ -69,13 +75,15 @@ function Vuelos() {
         </tr>
         </thead>
         <tbody>  {vuelos.map((vuelos) =>
-                  <tr key={vuelos.id}>
+                  <tr key={vuelos.codigo}>
                     <th scope="col"><Link to={"" + vuelos.codigo}>{vuelos.codigo}</Link></th>
-                    <td >{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.ciudad.nombre}</td>
-                    <td >{vuelos.origen_aero.codigo+' '+vuelos.destino_aero.ciudad.nombre}</td>
-                    <td >{vuelos.fecha}</td>
-                    <td >{vuelos.hora}</td>
-                    <td >{vuelos.cod_avion}</td>
+                    <td>{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.nombre}</td>
+                    <td>{vuelos.origen_aero.ciudad.nombre}</td>
+                    <td>{vuelos.destino_aero.codigo+' '+vuelos.destino_aero.nombre}</td>
+                    <td>{vuelos.destino_aero.ciudad.nombre}</td>
+                    <td>{vuelos.fecha}</td>
+                    <td>{vuelos.hora}</td>
+                    <td>{vuelos.cod_avion}</td>
                     <td><button className="btn btn-primary" type="button" onClick={() => Disponibilidad(vuelos.codigo)}>Disponibilidad</button></td>
                     <td><button className="btn btn-primary" type="button" onClick={() => borrar(vuelos.codigo)}>Eliminar</button></td>
                     </tr>
@@ -86,7 +94,7 @@ function Vuelos() {
         Nuevo Vuelo
       </button>
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -95,24 +103,32 @@ function Vuelos() {
       </div>
       <div class="modal-body">
       <div class="mb-3">
-        <label for="codigoAeropuerto" class="form-label">Codigo Vuelo</label>
+        <label htmlFor="codigoAeropuerto" class="form-label">Codigo Vuelo</label>
         <input type="codigo" class="form-control" id="codigoAvion"  name='codigo' onChange={handleChangeVuelo} />
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 5 letras y ser UNICO.</div>
       </div>
-        <div class="mb-3">
-            <label for="origen" class="form-label">Aero. Origen</label>
-            <input type="Origen" class="form-control" id="Origen"  name='cod_origen_aero' onChange={handleChangeVuelo}/>
-        </div>
-        <div class="mb-3">
-            <label for="destino" class="form-label">Aero. Destino </label>
-            <input type="destino" class="form-control" id="destino"  name='cod_destino_aero' onChange={handleChangeVuelo}/>
-        </div>
+
+
+        <select class="form-select"  name="cod_origen_aero" aria-label="Default select example" onChange={handleChangeVuelo} style={{marginBottom:'5%'}} >
+            <option selected> Aero. Origen </option>
+            {aeropuertos.map((aeropuertos) =>
+          <option key={aeropuertos.codigo} value={aeropuertos.codigo}>{aeropuertos.codigo+' '}{aeropuertos.nombre}</option>
+        )}
+          </select>
+
+          <select class="form-select"   name='cod_destino_aero' aria-label="Default select example" onChange={handleChangeVuelo} style={{marginBottom:'5%'}} >
+            <option selected> Aero. Destino </option>
+            {aeropuertos.map((aeropuertos) =>
+          <option key={aeropuertos.codigo} value={aeropuertos.codigo}>{aeropuertos.codigo+' '}{aeropuertos.nombre}</option>
+        )}
+          </select>
+
         <div class="mb-3" style={{display:'grid'}}>
-            <label for="fecha" class="form-label">Fecha</label>
+            <label htmlFor="fecha" class="form-label">Fecha</label>
               <input type="date" id="fecha" name="fecha" style={{height:'140%'}} onChange={handleChangeVuelo}/>
         </div>
         <div class="mb-3" style={{display:'grid', marginTop:'5%'}}>
-          <label for="appt">Hora</label>
+          <label htmlFor="appt">Hora</label>
           <input type="time" id="appt" style={{height:'140%', width:'40%'}}  name='hora' onChange={handleChangeVuelo}/>
         </div>
         <div class="mb-3" >

@@ -46,19 +46,19 @@ function FormAviones() {
 
      <form>
     <div class="mb-3">
-        <label for="codigoAvion" class="form-label">Codigo </label>
+        <label htmlFor="codigoAvion" class="form-label">Codigo </label>
         <input type="text" class="form-control" id="codigoAvion" value={codigoAvion} disabled name="codigo" onChange={handleChange}/>
     </div>
     <div class="mb-3">
-        <label for="nombreAvion" class="form-label">Marca</label>
+        <label htmlFor="nombreAvion" class="form-label">Marca</label>
         <input type="text" class="form-control" id="nombreAeropuerto" value={avion.marca} name="marca" onChange={handleChange}/>
     </div>
     <div class="mb-3">
-        <label for="modelo" class="form-label">Modelo </label>
+        <label htmlFor="modelo" class="form-label">Modelo </label>
         <input type="text" class="form-control" id="modelo" value={avion.modelo} name="modelo" onChange={handleChange}/>
     </div>
     <div class="mb-3">
-        <label for="capacidad" class="form-label">Capacidad de Pasajeros</label>
+        <label htmlFor="capacidad" class="form-label">Capacidad de Pasajeros</label>
         <input type="text" class="form-control" id="capacidad" value={avion.capacidad} name="capacidad" onChange={handleChange} disabled/>
     </div>
 

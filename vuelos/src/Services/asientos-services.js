@@ -6,7 +6,7 @@ export async function getAsientosByID(id) {
       let response = await axios.get(`http://localhost:8000/asientos/${id}`);
       datos_prop = response.data;
     } catch (e) {
-      alert(e);
+      alert(e.response.data.detail);
     }
     
     return datos_prop;

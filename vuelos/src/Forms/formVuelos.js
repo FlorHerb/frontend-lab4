@@ -54,23 +54,23 @@ function FormVuelos() {
 
      <form>
     <div class="mb-3">
-        <label for="codigoVuelo" class="form-label">Codigo </label>
+        <label htmlFor="codigoVuelo" class="form-label">Codigo </label>
         <input type="codigo" class="form-control" id="codigoVuelo" value={codigoVuelo} disabled onChange={handleChange}/>
     </div>
     <div class="mb-3">
-        <label for="origen" class="form-label">Aero. Origen</label>
+        <label htmlFor="origen" class="form-label">Aero. Origen</label>
         <input type="Origen" class="form-control" id="Origen" value={vuelo.cod_origen_aero} name="cod_origen_aero" onChange={handleChange}/>
     </div>
     <div class="mb-3">
-        <label for="destino" class="form-label">Aero. Destino </label>
+        <label htmlFor="destino" class="form-label">Aero. Destino </label>
         <input type="destino" class="form-control" id="destino" value={vuelo.cod_destino_aero} name="cod_destino_aero" onChange={handleChange} />
     </div>
     <div class="mb-3" style={{display:'grid'}}>
-        <label for="fecha" class="form-label">Fecha</label>
+        <label htmlFor="fecha" class="form-label">Fecha</label>
           <input type="date" id="fecha" value={vuelo.fecha} onChange={handleChange} name="fecha" style={{height:'140%'}}/>
     </div>
     <div class="mb-3" style={{display:'grid', marginTop:'5%'}}>
-    <label for="appt">Hora</label>
+    <label htmlFor="appt">Hora</label>
     <input type="time" id="appt" name="hora" value={vuelo.hora} onChange={handleChange} style={{height:'140%', width:'40%'}}/>
     </div>
     <div class="mb-3">
