@@ -4,11 +4,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getVuelos, deleteVuelo, addVuelo } from "../Services/vuelos-services";
 import { getAviones } from "../Services/aviones-services";
+import { getAeropuertos } from "../Services/aeropuetos-services";
 
 function Vuelos() {
   const [vuelos, setvuelos] = useState([]);
   const [vuelo, setvuelo] = useState([]);
   const [aviones, setAviones] = useState([]);
+  const [aeropuertos, setAeropuertos] = useState([]);
   const navigate = useNavigate()
   const Disponibilidad = async (id) => {
     navigate('/disponibilidad/'+id);
@@ -16,8 +18,9 @@ function Vuelos() {
 
   useEffect(() => {
     obtenerVuelos();
-    obtenerAviones()
-  }, []);
+    obtenerAviones();
+    obtenerAeropuertos()
+  }, [setvuelos]);
 
   const obtenerVuelos = async () => {
     setvuelos( await getVuelos());
@@ -25,6 +28,10 @@ function Vuelos() {
 
   const obtenerAviones = async () => {
     setAviones( await getAviones());
+  }
+
+  const obtenerAeropuertos = async () => {
+    setAeropuertos( await getAeropuertos());
   }
 
   const borrar = async (codigo) => {
@@ -59,7 +66,9 @@ function Vuelos() {
         <thead>
         <tr class="table-active">
           <th scope="col">Codigo</th>
+          <th scope="col">Aero Origen</th>
           <th scope="col">Origen</th>
+          <th scope="col">Aero Destino</th>
           <th scope="col">Destino</th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
@@ -71,8 +80,10 @@ function Vuelos() {
         <tbody>  {vuelos.map((vuelos) =>
                   <tr key={vuelos.id}>
                     <th scope="col"><Link to={"" + vuelos.codigo}>{vuelos.codigo}</Link></th>
-                    <td >{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.ciudad.nombre}</td>
-                    <td >{vuelos.origen_aero.codigo+' '+vuelos.destino_aero.ciudad.nombre}</td>
+                    <td >{vuelos.origen_aero.codigo+' '+vuelos.origen_aero.nombre}</td>
+                    <td >{vuelos.origen_aero.ciudad.nombre}</td>
+                    <td >{vuelos.destino_aero.codigo+' '+vuelos.destino_aero.nombre}</td>
+                    <td >{vuelos.destino_aero.ciudad.nombre}</td>
                     <td >{vuelos.fecha}</td>
                     <td >{vuelos.hora}</td>
                     <td >{vuelos.cod_avion}</td>
@@ -99,14 +110,22 @@ function Vuelos() {
         <input type="codigo" class="form-control" id="codigoAvion"  name='codigo' onChange={handleChangeVuelo} />
         <div id="codigoHelp" class="form-text">Debe estar compuesto por 5 letras y ser UNICO.</div>
       </div>
-        <div class="mb-3">
-            <label for="origen" class="form-label">Aero. Origen</label>
-            <input type="Origen" class="form-control" id="Origen"  name='cod_origen_aero' onChange={handleChangeVuelo}/>
-        </div>
-        <div class="mb-3">
-            <label for="destino" class="form-label">Aero. Destino </label>
-            <input type="destino" class="form-control" id="destino"  name='cod_destino_aero' onChange={handleChangeVuelo}/>
-        </div>
+
+
+        <select class="form-select"  name="cod_origen_aero" aria-label="Default select example" onChange={handleChangeVuelo} style={{marginBottom:'5%'}} >
+            <option selected> Aero. Origen </option>
+            {aeropuertos.map((aeropuertos) =>
+          <option key={aeropuertos.codigo} value={aeropuertos.codigo}>{aeropuertos.codigo+' '}{aeropuertos.nombre}</option>
+        )}
+          </select>
+
+          <select class="form-select"   name='cod_destino_aero' aria-label="Default select example" onChange={handleChangeVuelo} style={{marginBottom:'5%'}} >
+            <option selected> Aero. Destino </option>
+            {aeropuertos.map((aeropuertos) =>
+          <option key={aeropuertos.codigo} value={aeropuertos.codigo}>{aeropuertos.codigo+' '}{aeropuertos.nombre}</option>
+        )}
+          </select>
+
         <div class="mb-3" style={{display:'grid'}}>
             <label for="fecha" class="form-label">Fecha</label>
               <input type="date" id="fecha" name="fecha" style={{height:'140%'}} onChange={handleChangeVuelo}/>
